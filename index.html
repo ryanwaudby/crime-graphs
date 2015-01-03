@@ -1,11 +1,21 @@
 <html>
   <head>
     <title>Marple Crime</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="Chart.js"></script>
   </head>
   <body>
-    <canvas id="categoryChart"></canvas>
+    <div class="container">
+      <div class="page-header">
+        <p class="lead">Crime in Marple last month</p>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+    </div>
     <script src="police-data.js"></script>
   </body>
 </html>
