@@ -1,0 +1,9 @@
+.col-lg-6 {
+  margin: auto;
+  text-align: center
+}
+
+#locationMap {
+  height: 500px;
+  width: 600px;
+}
