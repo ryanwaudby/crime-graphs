@@ -1,12 +1,42 @@
 categories = {
 };
 
+outcome_data = [
+  {
+        value: 0,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Red"
+    },
+    {
+        value: 0,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Green"
+    }
+];
+
 function processEntry(entry) {
   (categories.hasOwnProperty(entry.category)) ? categories[entry.category]++ : categories[entry.category] = 1;
+
+  contentString = "Location: " + entry.location.street.name;
+  if (entry.outcome_status) {
+    contentString += " Outcome: " + entry.outcome_status.category
+    outcome_data[0].value++;
+  } else { outcome_data[0].value++; }
+
+  var infowindow = new google.maps.InfoWindow({
+      content: entry.location.street.name
+  });
+
+  console.log(entry.outcome_status)
   var marker = new google.maps.Marker({
       position: new google.maps.LatLng(entry.location.latitude, entry.location.longitude),
       map: map,
       title: entry.location.street.name
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
   });
 
 }
@@ -33,6 +63,10 @@ function createCharts() {
   ctx.canvas.height = 500;
   new Chart(ctx).Bar(data);
 
+  var ctx = $("#closedCaseChart").get(0).getContext("2d");
+  ctx.canvas.width = 500;
+  ctx.canvas.height = 500;
+  new Chart(ctx).Doughnut(outcome_data);
 }
 
 function createMap() {
