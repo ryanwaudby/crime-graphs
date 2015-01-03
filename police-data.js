@@ -1,21 +1,17 @@
 categories = {
 };
 
-function getRandomColor() {
-  var letters = '0123456789ABCDEF'.split('');
-  var color = '#';
-  for (var i = 0; i < 6; i++ ) {
-      color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
 function processEntry(entry) {
   (categories.hasOwnProperty(entry.category)) ? categories[entry.category]++ : categories[entry.category] = 1;
+  var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(entry.location.latitude, entry.location.longitude),
+      map: map,
+      title: entry.location.street.name
+  });
+
 }
 
 function createCharts() {
-
   data = {
     labels: [],
     datasets: [{
@@ -31,14 +27,24 @@ function createCharts() {
   for (var key in categories) {
     if (categories.hasOwnProperty(key)) { data.labels.push(key); data.datasets[0].data.push(categories[key]); }
   }
-  console.log(data);
 
   var ctx = $("#categoryChart").get(0).getContext("2d");
-  ctx.canvas.width = 500;
+  ctx.canvas.width = 550;
   ctx.canvas.height = 500;
   new Chart(ctx).Bar(data);
 
 }
+
+function createMap() {
+  var myLatlng = new google.maps.LatLng(53.393342,-2.061499);
+  var mapOptions = {
+    zoom: 15,
+    center: myLatlng
+  };
+  map = new google.maps.Map(document.getElementById("locationMap"), mapOptions);
+}
+
+google.maps.event.addDomListener(window, 'load', createMap);
 
 $.ajax({
   url: "http://data.police.uk/api/crimes-street/all-crime?lat=53.393342&lng=-2.061499",
