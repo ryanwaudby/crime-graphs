@@ -23,7 +23,7 @@ function processEntry(entry) {
   if (entry.outcome_status) {
     contentString += " Outcome: " + entry.outcome_status.category
     outcome_data[0].value++;
-  } else { outcome_data[0].value++; }
+  } else { outcome_data[1].value++; }
 
   var infowindow = new google.maps.InfoWindow({
       content: entry.location.street.name
@@ -64,8 +64,8 @@ function createCharts() {
   new Chart(ctx).Bar(data);
 
   var ctx = $("#closedCaseChart").get(0).getContext("2d");
-  ctx.canvas.width = 500;
-  ctx.canvas.height = 500;
+  ctx.canvas.width = 200;
+  ctx.canvas.height = 200;
   new Chart(ctx).Doughnut(outcome_data);
 }
 
