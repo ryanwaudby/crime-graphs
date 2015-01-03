@@ -29,7 +29,6 @@ function processEntry(entry) {
       content: entry.location.street.name
   });
 
-  console.log(entry.outcome_status)
   var marker = new google.maps.Marker({
       position: new google.maps.LatLng(entry.location.latitude, entry.location.longitude),
       map: map,
@@ -63,10 +62,10 @@ function createCharts() {
   ctx.canvas.height = 500;
   new Chart(ctx).Bar(data);
 
-  var ctx = $("#closedCaseChart").get(0).getContext("2d");
-  ctx.canvas.width = 200;
-  ctx.canvas.height = 200;
-  new Chart(ctx).Doughnut(outcome_data);
+  var pieCtx = $("#closedCaseChart").get(0).getContext("2d");
+  pieCtx.canvas.width = 200;
+  pieCtx.canvas.height = 200;
+  new Chart(pieCtx).Doughnut(outcome_data);
 }
 
 function createMap() {
