@@ -1,19 +1,18 @@
-categories = {
-};
+categories = {};
 
 outcome_data = [
   {
-        value: 0,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: "Red"
-    },
-    {
-        value: 0,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: "Green"
-    }
+    value: 0,
+    color:"#F7464A",
+    highlight: "#FF5A5E",
+    label: "Red"
+  },
+  {
+    value: 0,
+    color: "#46BFBD",
+    highlight: "#5AD3D1",
+    label: "Green"
+  }
 ];
 
 function processEntry(entry) {
@@ -21,9 +20,12 @@ function processEntry(entry) {
 
   contentString = "Location: " + entry.location.street.name;
   if (entry.outcome_status) {
-    contentString += " Outcome: " + entry.outcome_status.category
+    contentString += " Outcome: " + entry.outcome_status.category;
     outcome_data[0].value++;
-  } else { outcome_data[1].value++; }
+  }
+  else {
+    outcome_data[1].value++; 
+  }
 
   var infowindow = new google.maps.InfoWindow({
       content: entry.location.street.name
@@ -34,10 +36,10 @@ function processEntry(entry) {
       map: map,
       title: entry.location.street.name
   });
+
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map, marker);
   });
-
 }
 
 function createCharts() {
@@ -81,5 +83,8 @@ google.maps.event.addDomListener(window, 'load', createMap);
 
 $.ajax({
   url: "http://data.police.uk/api/crimes-street/all-crime?lat=53.393342&lng=-2.061499",
-  success: function(data) { data.forEach(function(entry) { processEntry(entry); }); createCharts(); }
+  success: function(data) {
+    data.forEach(function(entry) { processEntry(entry); });
+    createCharts();
+  }
 });
